@@ -37,3 +37,6 @@ If you want to get all the posts and the comments after post ID 226020410, you c
 ```
 $ scrapy crawl dcard -a target=both -a end_id=226020410
 ```
+
+## API
+If you want to get a glimpse of the api used in this crawler, you can check [dcard-api-test.ipynb](dcard-api-test.ipynb).
