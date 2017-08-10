@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import scrapy
 import json, re
 from DcardCrawler.spiders.utils import get_forum_urls, post_url, comment_url
@@ -14,7 +15,7 @@ class DcardSpider(scrapy.Spider):
         self.end_id = int(end_id)  # the id of the oldest post we want to get
 
     def parse(self, response):
-        posts = json.loads(response.body.decode('utf-8'))
+        posts = json.loads(response.body)
         
         if len(posts)==0:
             return
@@ -42,9 +43,9 @@ class DcardSpider(scrapy.Spider):
             yield scrapy.Request(next_list_url, callback=self.parse)
 
     def parse_post(self, response):
-        post = json.loads(response.body.decode('utf-8'))
+        post = json.loads(response.body)
         yield {'type':'post', 'target':post}
 
     def parse_comment(self, response):
-        comment = json.loads(response.body.decode('utf-8'))
+        comment = json.loads(response.body)
         yield {'type':'comment', 'target':comment}

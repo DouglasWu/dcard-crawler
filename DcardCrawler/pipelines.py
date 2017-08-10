@@ -5,6 +5,7 @@
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: http://doc.scrapy.org/en/latest/topics/item-pipeline.html
 import json
+import codecs
 
 POST_LINES_PATH = 'data/dcard_posts_lines.json'
 COMMENT_LINES_PATH = 'data/dcard_comments_lines.json'
@@ -26,9 +27,9 @@ def jsonfy(in_path, out_path):
 class DcardCrawlerPipeline(object):
     def open_spider(self, spider):
         if spider.target != 'comment':
-            self.post_file = open(POST_LINES_PATH, 'w')
+            self.post_file = codecs.open(POST_LINES_PATH, 'w', encoding='utf-8')
         if spider.target != 'post':
-            self.comment_file = open(COMMENT_LINES_PATH, 'w')
+            self.comment_file = codecs.open(COMMENT_LINES_PATH, 'w', encoding='utf-8')
 
     def process_item(self, item, spider):
         target_type, target = item['type'], item['target']

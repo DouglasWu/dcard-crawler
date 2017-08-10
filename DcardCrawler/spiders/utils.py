@@ -1,5 +1,5 @@
 import json
-import urllib.request
+from six.moves import urllib
 from bs4 import BeautifulSoup
 
 forum_url = "https://www.dcard.tw/_api/forums/{}/posts?popular=false"
