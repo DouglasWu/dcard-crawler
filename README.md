@@ -21,25 +21,29 @@ If you want to crawl all the posts at this moment, you can simply run:
 ```
 $ scrapy crawl dcard
 ```
-When running, you can check the dumped data at ```data/dcard_posts_lines.json```. Note that the crawler outputs one json string of a post at a line, so the file **does not** follow json format. When completed, the final result is saved at ```data/dcard_posts.json``` and it follows json format.
+When running, you can check the dumped data at ```data/dcard_posts_.json.lines```. Note that the crawler outputs one json string of a post at a line, so the file **does not** follow json format. When completed, the final result is saved at ```data/dcard_posts_.json``` and it follows json format.
 
 ## Arguments
 When you want to crawl not only the posts but also the comments, or you just want to crawl a part of the data, you can run the command with aruguments:
 ```
-$ scrapy crawl dcard -a target=<target> -a end_id=<end_id>
+$ scrapy crawl dcard -a target=<target> -a end_id=<end_id> -a forum=<forum> -a file_name=<file_name>
 ```
 ```<target>```: Specify whether you want to get the **post**, the **comment** or **both**. Default is post.
 
 ```<end_id>```: The post ID of the oldest post you want to include. Default is 6000(there are no dcard posts whose ID is smaller than 6000).
+
+```<forum>```: The forum alias. For example: funny. Default is all the forums.
+
+```<file_name>```: The suffix you want to add to the file name.
 
 For example, if you want to get all current comments, you can run:
 ```
 $ scrapy crawl dcard -a target=comment
 ```
 
-If you want to get all the posts and the comments after post ID 226020410, you can run:
+If you want to get all the posts and the comments in the 'whysoserious' forum after post ID 226020410, you can run:
 ```
-$ scrapy crawl dcard -a target=both -a end_id=226020410
+$ scrapy crawl dcard -a target=both -a end_id=226020410 -a forum=whysoserious
 ```
 
 ## API
@@ -75,19 +79,23 @@ $ scrapy crawl dcard
 ## 參數設定
 若要同時爬dcard上的留言，或者只爬取一部份的資料，可以在指令中加入參數：
 ```
-$ scrapy crawl dcard -a target=<target> -a end_id=<end_id>
+scrapy crawl dcard -a target=<target> -a end_id=<end_id> -a forum=<forum> -a file_name=<file_name>
 ```
 ```<target>```: 決定您想要爬的資料是 **post**（文章）、**comment**（留言）或是 **both**（兩者），預設是 post.
 
 ```<end_id>```: 您想爬取的最早一篇文章的id。 預設是6000（dcard上沒有文章的id小於6000）。
 
+```<forum>```: 想要爬取的看板英文名稱。例如有趣版：funny。預設是所有看板。
+
+```<file_name>```: 輸出檔案的檔名後綴。
+
 例如，如果想要爬目前所有的留言，可以執行：
 ```
 $ scrapy crawl dcard -a target=comment
 ```
-如果想要爬文章id在226020410之後的所有文章和留言，可以執行：
+如果想要爬廢文板中文章 id 在 226020410 之後的所有文章和留言，可以執行：
 ```
-$ scrapy crawl dcard -a target=both -a end_id=226020410
+$ scrapy crawl dcard -a target=both -a end_id=226020410 -a forum=whysoserious
 ```
 
 ## API

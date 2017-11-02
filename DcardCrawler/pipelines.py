@@ -7,10 +7,10 @@
 import json
 import codecs
 
-POST_LINES_PATH = 'data/dcard_posts_lines.json'
-COMMENT_LINES_PATH = 'data/dcard_comments_lines.json'
-POST_PATH = 'data/dcard_posts.json'
-COMMENT_PATH = 'data/dcard_comments.json'
+POST_LINES_PATH = 'data/dcard_posts_{}.json.lines'
+COMMENT_LINES_PATH = 'data/dcard_comments_{}.json.lines'
+POST_PATH = 'data/dcard_posts_{}.json'
+COMMENT_PATH = 'data/dcard_comments_{}.json'
 
 # convert the dumped data into a real json file
 def jsonfy(in_path, out_path):
@@ -27,9 +27,9 @@ def jsonfy(in_path, out_path):
 class DcardCrawlerPipeline(object):
     def open_spider(self, spider):
         if spider.target != 'comment':
-            self.post_file = codecs.open(POST_LINES_PATH, 'w', encoding='utf-8')
+            self.post_file = codecs.open(POST_LINES_PATH.format(spider.file_name), 'w', encoding='utf-8')
         if spider.target != 'post':
-            self.comment_file = codecs.open(COMMENT_LINES_PATH, 'w', encoding='utf-8')
+            self.comment_file = codecs.open(COMMENT_LINES_PATH.format(spider.file_name), 'w', encoding='utf-8')
 
     def process_item(self, item, spider):
         target_type, target = item['type'], item['target']
@@ -43,7 +43,7 @@ class DcardCrawlerPipeline(object):
     def close_spider(self, spider):
         if spider.target != 'comment':
             self.post_file.close()
-            jsonfy(POST_LINES_PATH, POST_PATH)
+            jsonfy(POST_LINES_PATH.format(spider.file_name), POST_PATH.format(spider.file_name))
         if spider.target != 'post':
             self.comment_file.close()
-            jsonfy(COMMENT_LINES_PATH, COMMENT_PATH)
+            jsonfy(COMMENT_LINES_PATH.format(spider.file_name), COMMENT_PATH.format(spider.file_name))

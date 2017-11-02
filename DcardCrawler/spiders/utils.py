@@ -14,10 +14,13 @@ def get_forum_names():
     forums = json.loads(response)
     return [f['alias'] for f in forums]
 
-def get_forum_urls():
-    forum_names = get_forum_names()
+def get_forum_urls(forum):
     forum_urls = []
-    for fname in forum_names:
-        forum_urls.append(forum_url.format(fname))
+    if forum == 'ALL':
+        forum_names = get_forum_names()
+        for fname in forum_names:
+            forum_urls.append(forum_url.format(fname))
+    else:
+        forum_urls.append(forum_url.format(forum))
 
     return forum_urls

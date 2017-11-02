@@ -5,14 +5,15 @@ from DcardCrawler.spiders.utils import get_forum_urls, post_url, comment_url
 
 class DcardSpider(scrapy.Spider):
     name = "dcard"
-    start_urls = get_forum_urls()
 
-    def __init__(self, target='post', end_id=6000, *args, **kwargs):
+    def __init__(self, target='post', end_id=6000, forum='ALL', file_name='', *args, **kwargs):
         super(DcardSpider, self).__init__(*args, **kwargs)
         if target not in ['post', 'comment', 'both']:
             raise Exception('Incorrect target value: '+target)
         self.target = target       # what data we want to get
         self.end_id = int(end_id)  # the id of the oldest post we want to get
+        self.start_urls = get_forum_urls(forum)
+        self.file_name = file_name
 
     def parse(self, response):
         posts = json.loads(response.body.decode('utf-8'))
